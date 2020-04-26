@@ -73,24 +73,24 @@ namespace parce_html
 
         static void Main(string[] args)
         {
-           var srcEncoding = Encoding.GetEncoding(1251);
+          /* var srcEncoding = Encoding.GetEncoding(1251);
             StreamReader sr = new StreamReader(fileName, encoding: srcEncoding);
             var txtHTML = sr.ReadToEnd();
             sr.Close();
-            
-            //var txtHTML = GetPage(@"https://vk.com/im?peers=176834784_221576632_c69_364969321_c210_233677838_265470711_c185&sel=c208");
+            */
+            var txtHTML = GetPage(@"https://vk.com/mit_nosu");
             //Console.WriteLine(txtHTML);
-            StreamWriter sw = new StreamWriter("test.txt");
-            sw.WriteLine(txtHTML);
-            sw.Close();
+            // StreamWriter sw = new StreamWriter("test.txt");
+            // sw.WriteLine(txtHTML);
+            //sw.Close();
             var doc = new HtmlDocument();   
             doc.LoadHtml(txtHTML);
-            /*
+            
             // Вывести все содержимое тега
-            var mess = doc.DocumentNode.SelectNodes("//div[contains(@class, 'im-mess-stack--content')]").Last();
+            var mess = doc.DocumentNode.SelectNodes("//div[contains(@class, '')]").Last();
             //Console.WriteLine(mess.InnerHtml);
             //Console.WriteLine(mess.InnerText);
-            
+            /*
             var allTag = mess.SelectNodes(".//a");
             Console.WriteLine(allTag.Count());
             foreach (var t in allTag)
@@ -102,26 +102,22 @@ namespace parce_html
             }
             */
 
-            //Вывести всех кто писал сообщения
-            Dictionary<string, int> userCount = new Dictionary<string, int>();
-            var messNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'im-mess-stack--content')]");
+            //Вывести все темы постов и их просмотры
+            var messNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'wi_body')]");
+            //like_views _views
             try
             {
                 Console.WriteLine(messNodes.Count);
                 foreach (var m in messNodes)
-                {
-                    var allA = m.SelectSingleNode(".//a[contains(@class, 'im-mess-stack--lnk')]");
+                { 
+                    var title = m.SelectSingleNode(".//div[contains(@class, 'pi_text')]");
+                    var count = m.SelectSingleNode(".//b[contains(@class, 'v_views')]");
+                    Console.WriteLine(title.InnerText + " " + count.InnerText);
 
-                    //Console.WriteLine(allA.InnerText);
-                    if (userCount.ContainsKey(allA.InnerText))
-                        userCount[allA.InnerText] += 1;
-                    else
-                        userCount[allA.InnerText] = 1;
+                    
                 }
 
-                foreach (var user in userCount)
-                    Console.WriteLine(user.Key + " " + user.Value);
-
+     
             }
             catch
             {
