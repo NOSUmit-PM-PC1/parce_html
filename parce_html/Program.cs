@@ -73,13 +73,13 @@ namespace parce_html
 
         static void Main(string[] args)
         {
-           /* var srcEncoding = Encoding.GetEncoding(1251);
+           var srcEncoding = Encoding.GetEncoding(1251);
             StreamReader sr = new StreamReader(fileName, encoding: srcEncoding);
             var txtHTML = sr.ReadToEnd();
             sr.Close();
-            */
-            var txtHTML = GetPage(@"https://vk.com/im?peers=176834784_221576632_c69_364969321_c210_233677838_265470711_c185&sel=c208");
-            Console.WriteLine(txtHTML);
+            
+            //var txtHTML = GetPage(@"https://vk.com/im?peers=176834784_221576632_c69_364969321_c210_233677838_265470711_c185&sel=c208");
+            //Console.WriteLine(txtHTML);
             StreamWriter sw = new StreamWriter("test.txt");
             sw.WriteLine(txtHTML);
             sw.Close();
